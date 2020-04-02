@@ -1,0 +1,14 @@
+smtp:
+ host: "smtp.gmail.com"
+ port: "465"
+ uname: "ajaynandamudi96@gmail.com"
+ password: "9542722241"
+ from-email: "ajaynandamudi96@gmail.com"
+api:
+  id: "123456"
+  base: "rtw-esb-common-sys-api"
+  semantic:
+    version: "v1"
+notifications:
+  send: "ak970437@gmail.com"
+                                                                                     

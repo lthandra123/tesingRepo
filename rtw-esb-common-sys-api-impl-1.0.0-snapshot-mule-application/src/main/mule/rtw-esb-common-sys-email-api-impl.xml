@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
+	<sub-flow name="email-subflow" doc:id="de11f706-5d12-411f-bc21-12c2816c219e" >
+		<logger level="INFO" doc:name="email-subflow-req" doc:id="cf9fccf0-4e3b-4c9e-b0c3-827079589992" message='#["Email Start"]'/>
+		<email:send doc:name="Send SMTP Email" doc:id="a3a5536c-2d6b-47c2-8a4a-811c3d9c5a61" config-ref="Gmail_SMTP1" fromAddress="#[payload.fromAddress]" subject="#[payload.emailSubject]" toAddresses='#[payload.toAddress splitBy "," map($ )]'>
+			<email:headers ><![CDATA[#[output application/java
+---
+{
+	"mail.smtp.starttls.enable" : "true"
+}]]]></email:headers>
+			<email:body contentType="text/html">
+				<email:content ><![CDATA[#[payload.emailBody]]]></email:content>
+			</email:body>
+		</email:send>
+		<ee:transform doc:name="Transform Message" doc:id="ecd5c921-3bf9-4bfa-ad39-5ed09d459526" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message: "Success"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="email-subflow-sent" doc:id="8d90e11b-f1ce-49db-a9d3-afaf0e42e0d4" message='#["Email End"]'/>
+	</sub-flow>
+	    <flow name="post:\email:api-config">
+		<flow-ref doc:name="email-subflow" doc:id="2383d313-101b-4822-8fd7-506069c2435f" name="email-subflow"/>
+
+    </flow>
+</mule>

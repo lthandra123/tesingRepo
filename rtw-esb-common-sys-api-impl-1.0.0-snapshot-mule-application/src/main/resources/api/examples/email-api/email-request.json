@@ -1,0 +1,7 @@
+{
+  "fromAddress": "from@nyandcompany.com",
+  "toAddress": "mdondeti@nyandcompany.com",
+  "emailSubject": "email sub",
+  "emailBody" : "Test",
+  "attachment":""
+}

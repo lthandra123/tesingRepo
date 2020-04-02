@@ -1,0 +1,14 @@
+# Application Configuration
+scheduler:
+  minutes: "60"
+  
+page:
+  size: "1000"
+ 
+https:
+  port: "8092"
+
+http:
+  port: "8082"
+    
+

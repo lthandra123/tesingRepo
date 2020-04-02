@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:email="http://www.mulesoft.org/schema/mule/email"
+	xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:sftp="http://www.mulesoft.org/schema/mule/sftp"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/sftp http://www.mulesoft.org/schema/mule/sftp/current/mule-sftp.xsd 
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/sockets http://www.mulesoft.org/schema/mule/sockets/current/mule-sockets.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+	<configuration-properties doc:name="Configuration properties" doc:id="b4f92fae-4826-4119-a4a4-3d9fc5f00d80" file="common-properties.yaml" />
+	<configuration-properties doc:name="Configuration properties" doc:id="30dd3727-e51b-4d9d-a3e2-d72be3d0a7e1" file="${mule.env}-properties.yaml" />
+	<global-property doc:name="Global Property" doc:id="2ff6c409-74fc-455d-989c-369b0ccad3ab" name="mule.env" value="uat-vpc" />
+	<!--  <sftp:config name="SFTP_Config" doc:name="SFTP Config" doc:id="79d8f48c-cb3d-4783-b44d-32ab87942379" >
+		<sftp:connection host="${sftp.host}" username="${sftp.uname}" password="${sftp.password}" port="${sftp.port}"/>
+	</sftp:config>-->
+	<http:listener-config name="httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="${http.port}" />
+    </http:listener-config>
+	<email:smtp-config name="Email_SMTP" doc:name="Email SMTP" doc:id="18dd143c-da93-4c20-b204-88e87ec59207" >
+		<email:smtp-connection host="${smtp.host}" user="${smtp.uname}" password="${smtp.password}" port="${smtp.port}" />
+	</email:smtp-config>
+	<email:smtp-config name="Gmail_SMTP1" doc:name="Email SMTP" doc:id="d24b11de-92fe-4fe8-a06a-67b5b1b27871" >
+		<email:smtps-connection host="smtp.gmail.com" user="ajaynandamudi96@gmail.com" password="9542722241" >
+			<tls:context >
+				<tls:trust-store insecure="true" />
+			</tls:context>
+		</email:smtps-connection>
+	</email:smtp-config>
+
+</mule>

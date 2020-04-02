@@ -1,0 +1,48 @@
+#%RAML 1.0
+title: rtw-esb-common-sys-api
+version: v1
+description: rtw-esb-common-sys-api is common API to interact with systems at RTW  such as send smtp email notifications.
+protocols: [ HTTP ]
+baseUri: https://localhost:8082/api/rtw/esb/common/sys/{version}
+mediaType: application/json
+traits:
+  accept-required: !include /exchange_modules/8c5c9262-f13a-4dc5-bde5-f84ae53654c1/common-traits/1.0.0/accept-required.raml
+  content-type-required: !include /exchange_modules/8c5c9262-f13a-4dc5-bde5-f84ae53654c1/common-traits/1.0.0/content-type-required.raml
+  client-credentials-required: !include /exchange_modules/8c5c9262-f13a-4dc5-bde5-f84ae53654c1/common-traits/1.0.0/client-credentials-required.raml
+  standard-error-responses: !include /exchange_modules/8c5c9262-f13a-4dc5-bde5-f84ae53654c1/common-traits/1.0.0/standard-error-responses.raml
+types:
+  email: !include types/email-api/email.raml
+  success: !include types/email-api/success.raml
+/ping:
+  get:
+    description: Return a standard response.
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/ping/get-response.json
+  put:
+    description: Return a standard response
+    body:
+      application/json:
+        example: !include examples/ping/put-request.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/ping/put-response.json 
+/email:
+  is: []
+  post:
+    description: To Send new SMTP email.
+    body:
+      application/json:
+        type: email
+        example: !include examples/email-api/email-request.json
+    responses: 
+            200:
+              body: 
+                application/json:
+                  type: success
+                  example: !include examples/email-api/email-response.json
+          
